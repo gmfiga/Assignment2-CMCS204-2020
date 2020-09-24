@@ -1,4 +1,5 @@
 import exceptions.InvalidNotationFormatException;
+import exceptions.StackUnderflowException;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,6 @@ public class Notation {
      * @return the postfix expression in string format
      * @throws InvalidNotationFormatException - if the infix expression format is invalid
      */
-
     //MUST use a queue for the internal structure that holds the postfix solution.
     //Then use the toString method of the Queue to return the solution as a string.
     public static String convertInfixToPostfix(String infix) throws InvalidNotationFormatException {
@@ -22,6 +22,7 @@ public class Notation {
         NotationStack<Character> stack = new NotationStack<>();
         NotationQueue<Character> queue = new NotationQueue<>();
         String postfix = "";
+        char verifyVariable = '$';
 
         char[] charArray = infix.toCharArray();
 
@@ -51,23 +52,28 @@ public class Notation {
                     }
                 } else if (c == '/' || c == '*') {
                     ArrayList<Character> tempString = new ArrayList<>();
-                    while (stack.top() != '-' || stack.top() != '+') {
-                        tempString.add(stack.pop());
+                    try {
+                        while ((stack.top() != '-' || stack.top() != '+')) {
+                            tempString.add(stack.pop());
+                        }
+                    } catch (StackUnderflowException exception){
                     }
                     stack.push(c);
                     for (char a : tempString) {
                         stack.push(a);
                     }
                 }
-
             }
 
             else if (c == ')') {
                 while (!(stack.isEmpty())) {
                     if (stack.top() == '(')
-                        stack.pop();
+                        verifyVariable = stack.pop();
                     queue.enqueue(stack.pop());
                 }
+                if (verifyVariable == '$')
+                    throw new InvalidNotationFormatException();
+
             }
     }
 

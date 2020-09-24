@@ -150,9 +150,7 @@ public class NotationStackTest {
         fill.add("banana");
         fill.add("carrot");
         //start with an empty queue
-        stringS = new NotationStack<String>(5);
-        //fill with an ArrayList
-        stringS.fill(fill);
+        stringS = new NotationStack<String>(fill);
         assertEquals(3,stringS.size());
         assertEquals("carrot", stringS.pop());
         assertEquals("banana", stringS.pop());

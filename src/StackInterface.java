@@ -12,9 +12,15 @@ import java.util.ArrayList;
 public interface StackInterface<T> {
 
     /**
-     * Provide two constructors
+     * Provide three constructors
      * 1. takes in an int as the size of the stack
      * 2. default constructor - uses default as the size of the stack
+     * 3. takes an ArrayList as a parameter, and fills the Stack with the elements of the ArrayList,
+     * 		First element in the ArrayList is the first bottom element of the Stack
+     *
+     * 	  YOU MUST MAKE A COPY OF LIST AND ADD THOSE ELEMENTS TO THE STACK, if you use the
+     * 	  list reference within your Stack, you will be allowing direct access to the data of
+     * 	  your Stack causing a possible security breach.
      */
 
     /**
@@ -72,14 +78,5 @@ public interface StackInterface<T> {
      */
     public String toString(String delimiter);
 
-    /**
-     * Fills the Stack with the elements of the ArrayList, First element in the ArrayList
-     * is the first bottom element of the Stack
-     * YOU MUST MAKE A COPY OF LIST AND ADD THOSE ELEMENTS TO THE STACK, if you use the
-     * list reference within your Stack, you will be allowing direct access to the data of
-     * your Stack causing a possible security breech.
-     * @param list elements to be added to the Stack from bottom to top
-     */
-    public void fill(ArrayList<T> list);
 
 }

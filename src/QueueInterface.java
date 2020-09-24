@@ -10,10 +10,15 @@ import java.util.ArrayList;
  * @param <T> data type
  */
 public interface QueueInterface<T> {
-    /** provide two constructors
+    /** provide three constructors
      * 1. takes an int as the size of the queue
      * 2. default constructor - uses a default as the size of the queue
+     * 3. takes an ArrayList as a parameter, and fills the Queue with the
+     * 	elements of the ArrayList, First element in the ArrayList is the first element in the Queue
      *
+     * 	  YOU MUST MAKE A COPY OF LIST AND ADD THOSE ELEMENTS TO THE QUEUE, if you use the
+     * 	  list reference within your Queue, you will be allowing direct access to the data of
+     * 	  your Queue causing a possible security breach.
      */
 
     /**
@@ -71,7 +76,6 @@ public interface QueueInterface<T> {
      * @param list elements to be added to the Queue
      */
     public void fill(ArrayList<T> list);
-
 
 
 }

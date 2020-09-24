@@ -21,6 +21,13 @@ public class NotationStack<T> implements StackInterface {
         topIndex = -1;
     }
 
+    public NotationStack(ArrayList<T> arrayList) {
+        T[] tempStack = (T[]) new Object[DEFAULT_CAPACITY];
+        stackArray = tempStack;
+        topIndex = -1;
+        fill(arrayList);
+    }
+
     @Override
     public boolean isEmpty() {
         if (topIndex == -1)
@@ -92,7 +99,7 @@ public class NotationStack<T> implements StackInterface {
         return string;
     }
 
-    @Override
+
     public void fill(ArrayList list) {
 
         ArrayList<T> cloneList = new ArrayList<>();

@@ -27,6 +27,15 @@ public class NotationQueue<T> implements QueueInterface {
         capacity = DEFAULT_CAPACITY;
     }
 
+    public NotationQueue(ArrayList<T> arrayList) {
+        T[] tempStack = (T[]) new Object[DEFAULT_CAPACITY];
+        queueArray = tempStack;
+        front = 0;
+        rear = 0;
+        capacity = DEFAULT_CAPACITY;
+        fill(arrayList);
+    }
+
 
     @Override
     public boolean isEmpty() {

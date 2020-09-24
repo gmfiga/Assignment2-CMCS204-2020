@@ -140,9 +140,7 @@ public class NotationQueueTest {
         fill.add("banana");
         fill.add("carrot");
         //start with an empty queue
-        stringQ = new NotationQueue<String>(5);
-        //fill with an ArrayList
-        stringQ.fill(fill);
+        stringQ = new NotationQueue<String>(fill);
         assertEquals(3,stringQ.size());
         assertEquals("apple", stringQ.dequeue());
         assertEquals("banana", stringQ.dequeue());

@@ -22,65 +22,71 @@ public class Notation {
         NotationStack<Character> stack = new NotationStack<>();
         NotationQueue<Character> queue = new NotationQueue<>();
         String postfix = "";
-        char verifyVariable = '$';
+
+        infix += ")";
+        stack.push('(');
 
         char[] charArray = infix.toCharArray();
 
-        for (char c : charArray) {
+        for (char character : charArray) {
 
-            if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' ||
-                    c == '6' || c == '7' || c == '8' || c == '9') {
-                queue.enqueue(c);
+            //if operand is found
+            if (character == '1' || character == '2' || character == '3' ||
+                    character == '4' || character == '5' || character == '6' ||
+                    character == '7' || character == '8' || character == '9') {
+
+
+                queue.enqueue(character);
+
             }
 
-            else if (c == '(') {
-                stack.push(c);
+            //if left parenthesis is found
+            else if (character == '(') {
+                stack.push(character);
             }
 
-            else if (c== '+'||c== '-'||c== '/'||c== '*') {
-
-                if (stack.isEmpty()) {
-                    stack.push(c);
-                } else if (c == '+' || c == '-') {
-                    ArrayList<Character> tempString = new ArrayList<>();
-                    while (!stack.isEmpty()) {
-                        tempString.add(stack.pop());
-                    }
-                    stack.push(c);
-                    for (char a : tempString) {
-                        stack.push(a);
-                    }
-                } else if (c == '/' || c == '*') {
-                    ArrayList<Character> tempString = new ArrayList<>();
+            //if operators is found
+            else if (character == '+' || character == '-' || character == '*' || character == '/') {
+                if (character == '+' || character == '-'){
                     try {
-                        while ((stack.top() != '-' || stack.top() != '+')) {
-                            tempString.add(stack.pop());
+                        while (stack.top() != '(') {
+                            queue.enqueue(stack.pop());
                         }
                     } catch (StackUnderflowException exception){
+                    } finally {
+                        stack.push(character);
                     }
-                    stack.push(c);
-                    for (char a : tempString) {
-                        stack.push(a);
+                }
+
+                else if ( character == '*' || character == '/'){
+                    try {
+                        while (stack.top() == '*' || stack.top() == '/') {
+                            queue.enqueue(stack.pop());
+                        }
+                    } catch (StackUnderflowException exception){
+                    } finally {
+                        stack.push(character);
                     }
                 }
             }
 
-            else if (c == ')') {
-                while (!(stack.isEmpty())) {
-                    if (stack.top() == '(')
-                        verifyVariable = stack.pop();
-                    queue.enqueue(stack.pop());
-                }
-                if (verifyVariable == '$')
+            //if right parenthesis is found
+            else if (character == ')'){
+                try {
+                    while (stack.top() != '('){
+                        queue.enqueue(stack.pop());
+                    }
+                    stack.pop();
+                } catch (StackUnderflowException exception){
                     throw new InvalidNotationFormatException();
+                }
 
             }
-    }
+        }
 
-    postfix =queue.toString();
-
+        postfix = queue.toString();
         return postfix;
-}
+    }
 
     /**
      * Convert the Postfix expression to the Infix expression

@@ -3,6 +3,12 @@ import exceptions.QueueUnderflowException;
 
 import java.util.ArrayList;
 
+/** Class for a Queue
+ *
+ * @author Gabriel Martins Figueiredo
+ *
+ * @param <T> data type
+ */
 public class NotationQueue<T> implements QueueInterface {
 
     private T[] queueArray;
@@ -11,6 +17,10 @@ public class NotationQueue<T> implements QueueInterface {
     private int capacity;
     private static final int DEFAULT_CAPACITY = 50;
 
+    /**
+     * constructor takes an int as the size of the queue
+     * @param i - size of the queue
+     */
     public NotationQueue(int i) {
         T[] tempStack = (T[]) new Object[i];
         queueArray = tempStack;
@@ -19,6 +29,9 @@ public class NotationQueue<T> implements QueueInterface {
         capacity = i;
     }
 
+    /**
+     * default constructor - uses a default as the size of the queue
+     */
     public NotationQueue() {
         T[] tempStack = (T[]) new Object[DEFAULT_CAPACITY];
         queueArray = tempStack;
@@ -27,6 +40,11 @@ public class NotationQueue<T> implements QueueInterface {
         capacity = DEFAULT_CAPACITY;
     }
 
+    /**
+     * takes an ArrayList as a parameter, and fills the Queue with the
+     * elements of the ArrayList, First element in the ArrayList is the first element in the Queue
+     * @param arrayList - list of items
+     */
     public NotationQueue(ArrayList<T> arrayList) {
         T[] tempStack = (T[]) new Object[DEFAULT_CAPACITY];
         queueArray = tempStack;
@@ -37,6 +55,10 @@ public class NotationQueue<T> implements QueueInterface {
     }
 
 
+    /**
+     * Determines if Queue is empty
+     * @return true if Queue is empty, false if not
+     */
     @Override
     public boolean isEmpty() {
         if (rear == 0)
@@ -44,6 +66,10 @@ public class NotationQueue<T> implements QueueInterface {
         return false;
     }
 
+    /**
+     * Determines of the Queue is empty
+     * @return
+     */
     @Override
     public boolean isFull() {
         if (rear == capacity)
@@ -51,6 +77,10 @@ public class NotationQueue<T> implements QueueInterface {
         return false;
     }
 
+    /**
+     * Deletes and returns the element at the front of the Queue
+     * @return the element at the front of the Queue
+     */
     @Override
     public Object dequeue() throws QueueUnderflowException {
 
@@ -69,11 +99,20 @@ public class NotationQueue<T> implements QueueInterface {
         return frontElement;
     }
 
+    /**
+     * Number of elements in the Queue
+     * @return the number of elements in the Queue
+     */
     @Override
     public int size() {
         return rear;
     }
 
+    /**
+     * Adds an element to the end of the Queue
+     * @param e the element to add to the end of the Queue
+     * @return true if the add was successful, false if not
+     */
     @Override
     public boolean enqueue(Object e) throws QueueOverflowException {
 
@@ -86,6 +125,11 @@ public class NotationQueue<T> implements QueueInterface {
         return true;
     }
 
+    /**
+     * Returns the string representation of the elements in the Queue,
+     * the beginning of the string is the front of the queue
+     * @return string representation of the Queue with elements
+     */
     @Override
     public String toString() {
         String string = "";
@@ -95,6 +139,11 @@ public class NotationQueue<T> implements QueueInterface {
         return string;
     }
 
+    /**
+     * Returns the string representation of the elements in the Queue, the beginning of the string is the front of the queue
+     * Place the delimiter between all elements of the Queue
+     * @return string representation of the Queue with elements separated with the delimiter
+     */
     @Override
     public String toString(String delimiter) {
         String string = "";
@@ -107,6 +156,11 @@ public class NotationQueue<T> implements QueueInterface {
         return string;
     }
 
+    /**
+     * Fills the Queue with the elements of the ArrayList, First element in the ArrayList
+     * is the first element in the Queue
+     * @param list elements to be added to the Queue
+     */
     @Override
     public void fill(ArrayList list) {
         ArrayList<T> cloneList = new ArrayList<>();

@@ -3,6 +3,11 @@ import exceptions.StackUnderflowException;
 
 import java.util.ArrayList;
 
+/** Class for a Postfix and Infix arithmetic handling
+ *
+ * @author Gabriel Martins Figueiredo
+ *
+ */
 public class Notation {
 
     public Notation() {
@@ -10,7 +15,6 @@ public class Notation {
 
     /**
      * Convert an infix expression into a postfix expression
-     *
      * @param infix - the infix expression in string format
      * @return the postfix expression in string format
      * @throws InvalidNotationFormatException - if the infix expression format is invalid
@@ -88,7 +92,6 @@ public class Notation {
 
     /**
      * Convert the Postfix expression to the Infix expression
-     *
      * @param postfix - the postfix expression in string format
      * @return the infix expression in string format
      * @throws InvalidNotationFormatException - if the postfix expression format is invalid
@@ -134,66 +137,54 @@ public class Notation {
 
     /**
      * Evaluates a postfix expression from a string to a double
-     *
      * @param postfixExpr - the postfix expression in String format
      * @return the evaluation of the postfix expression as a double
      * @throws InvalidNotationFormatException - if the postfix expression format is invalid
      */
     public static double evaluatePostfixExpression(String postfixExpr) {
 
-        NotationStack<Character> stack = new NotationStack<>();
-
-        double result = 0;
-        char[] charArray = postfixExpr.toCharArray();
+        NotationStack<Double> stack = new NotationStack<>();
 
         for (int i = 0; i < postfixExpr.length(); i++) {
+            char character = postfixExpr.charAt(i);
 
-            Character character = postfixExpr.charAt(i);
-
-            //if operand or left parenthesis found
+            //if operand found
             if (character == '1' || character == '2' || character == '3' ||
                     character == '4' || character == '5' || character == '6' ||
-                    character == '7' || character == '8' || character == '9' ||
-                    character == '(') {
+                    character == '7' || character == '8' || character == '9') {
 
-                stack.push(character);
+                stack.push(((double) Character.getNumericValue(character)));
             }
 
-
-            //if operator is found
+            //if operators is found
             else if (character == '+' || character == '-' || character == '*' || character == '/') {
-                if (stack.size() < 2)
+                double rightOperand;
+                double leftOperand;
+                try {
+                    rightOperand = stack.pop();
+                    leftOperand = stack.pop();
+                } catch (StackUnderflowException e) {
                     throw new InvalidNotationFormatException();
-                else {
-                    double rightOperand = Character.getNumericValue(stack.pop());
-                    double leftOperand = Character.getNumericValue(stack.pop());
+                }
 
-                    if (character == '+') {
-                        Double operationResult = leftOperand + rightOperand;
-                        stack.push(operationResult.toString());
-                    } else if (character == '-') {
-                        Double operationResult = leftOperand - rightOperand;
-                        stack.push(operationResult.toString());
-                    } else if (character == '*') {
-                        Double operationResult = leftOperand * rightOperand;
-                        stack.push(operationResult.toString());
-                    } else if (character == '/') {
-                        Double operationResult = leftOperand / rightOperand;
-                        stack.push(operationResult.toString());
-                    }
-
+                switch (character) {
+                    case '+':
+                        stack.push(leftOperand + rightOperand);
+                        break;
+                    case '-':
+                        stack.push(leftOperand - rightOperand);
+                        break;
+                    case '/':
+                        stack.push(leftOperand / rightOperand);
+                        break;
+                    case '*':
+                        stack.push(leftOperand * rightOperand);
+                        break;
                 }
             }
         }
 
-
-        if (stack.size() == 1) {
-            result = Character.getNumericValue(stack.pop());
-        } else {
-            throw new InvalidNotationFormatException();
-        }
-
-        return result;
+        return stack.pop();
     }
 
 }
